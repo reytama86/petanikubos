@@ -11,11 +11,15 @@ class transaksi_total extends Model
     protected $guarded =[];
 
     protected $table = 'transaksi_total';
+    protected $primaryKey = 'id_tt';
+    protected $fillable = [
+        'status',
+    ];
     //protected $table = 'order_details';
 
     public function member()
     {
-        return $this->belongsTo(Member::class, 'id_member','id_tt');
+        return $this->belongsTo(Member::class, 'id_user','id_user');
     }
 
     public function payment()

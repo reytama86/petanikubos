@@ -8,35 +8,30 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 
 class ReportController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth')->only(['index']);
-        $this->middleware('api')->only(['get_reports']);
-    }
-    public function get_reports(Request $request)
+{public function get_reports(Request $request)
     {
        $report = DB::table('transaksi_detail')
-       ->join('produk', 'produk.id' , '=', 'transaksi_detail.id_produk')
+       ->join('produk', 'produk.id_produk', '=', 'transaksi_detail.id_produk')
        ->select(DB::raw('
-            nama_produk,
+            produk.nama_produk,
             count(*) as jumlah_dibeli, 
-            harga,
-            SUM(total) as pendapatan,
-            SUM(jumlah) as total_qty'))
+            produk.harga,
+            SUM(transaksi_detail.jumlah) as total_qty,
+            SUM(produk.harga * transaksi_detail.jumlah) as pendapatan'))
         ->whereRaw("date(transaksi_detail.created_at) >= '$request->dari'")
         ->whereRaw("date(transaksi_detail.created_at) <= '$request->sampai'")
-        ->groupBy('id_produk', 'nama_produk', 'harga')
+        ->groupBy('transaksi_detail.id_produk', 'produk.nama_produk', 'produk.harga')
         ->get();
-
+    
        return response()->json([
         'data' => $report
        ]);
     }
+    
+
 
     public function index()
     {
         return view('report.index');
     }
-
 }

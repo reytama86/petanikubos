@@ -24,16 +24,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($categories as $category)
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{$category->nama_kategori}}</td>
-                        <td>
-                            <a data-toggle="modal" href="#modal-form" data-id="{{$category->id_kategori}}" class="btn btn-warning modal-ubah">Edit</a>
-                            <a href="#" data-id="{{$category->id_kategori}}" class="btn btn-danger btn-hapus">Hapus</a>
-                        </td>
-                    </tr>
-                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -55,8 +45,7 @@
                         <form class="form-kategori">
                             <div class="form-group">
                                 <label for="">Nama Kategori</label>
-                                <input type="text" class="form-control" name="nama_kategori"
-                                    placeholder="Nama Kategori" required>
+                                <input type="text" class="form-control" name="nama_kategori" id="" placeholder="Nama Kategori" required>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -75,64 +64,44 @@
 
 @push('js')
 <script>
-    $(function() {
+    $(document).ready(function() {
+        // Fungsi untuk menampilkan data kategori saat halaman dimuat
+        function loadData() {
+            $.ajax({
+                url: '/api/categories',
+                success: function({ data }) {
+                    let row = '';
+                    data.map(function(val, index) {
+                        row += `
+                            <tr>
+                               <td>${index + 1}</td>
+                               <td>${val.nama_kategori}</td>
+                               <td>
+                                    <a data-toggle="modal" href="#modal-form" data-id="${val.id_kategori}" class="btn btn-warning modal-ubah">Edit</a>
+                                    <a href="#" data-id="${val.id_kategori}" class="btn btn-danger btn-hapus">Hapus</a>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    $('tbody').html(row); // Mengganti seluruh isi tbody dengan data yang baru
+                }
+            });
+        }
 
-        $.ajax({
-            url: '/api/categories',
-            success: function({
-                data
-            }) {
-                let row = '';
-                data.map(function(val, index) {
-                    row += `
-            <tr>
-               <td>${index + 1}</td>
-               <td>${val.nama_kategori}</td>
-               <td>
-                    <a data-toggle="modal" href="#modal-form" data-id="${val.id_kategori}" class="btn btn-warning modal-ubah">Edit</a>
-                    <a href="#" data-id="${val.id_kategori}" class="btn btn-danger btn-hapus">Hapus</a>
-                </td>
-            </tr>
-            `;
-                });
-                $('tbody').append(row);
-            }
-        });
-
-        $(document).on('click', '.btn-hapus', function() {
-            const id = $(this).data('id')
-            const token = localStorage.getItem('token')
-
-            confirm_dialog = confirm('Apakah anda yakin?');
-            if (confirm_dialog) {
-                $.ajax({
-                    url: '/api/categories/' + id,
-                    type: "DELETE",
-                    headers: {
-                        "Authorization": 'Bearer ' + token
-                    },
-                    success: function(data) {
-                        if (data.message == 'success') {
-                            alert('Data berhasil dihapus');
-                            location.reload()
-                        }
-                    }
-
-                })
-            }
-        });
+        // Memanggil fungsi untuk menampilkan data kategori saat halaman dimuat
+        loadData();
 
         $('.modal-tambah').click(function() {
             $('#modal-form').modal('show');
             $('input[name="nama_kategori"]').val('');
 
-            $('.form-kategori').submit(function(e) {
+            $('.form-kategori').off('submit').on('submit', function(e) {
                 e.preventDefault();
                 const token = localStorage.getItem('token');
                 const frmdata = new FormData(this);
 
                 $.ajax({
-                    url: 'api/categories',
+                    url: '/api/categories',
                     type: 'POST',
                     data: frmdata,
                     cache: false,
@@ -144,30 +113,29 @@
                     success: function(data) {
                         if (data.success) {
                             alert('Data berhasil ditambah');
-                            location.reload();
+                            location.reload(); // Reload halaman jika sukses
                         }
                     }
                 });
             });
         });
 
+        // Menangani pengiriman form untuk edit kategori
         $(document).on('click', '.modal-ubah', function() {
             $('#modal-form').modal('show');
             const id = $(this).data('id');
 
-            $.get(`/api/categories/${id}`, function({
-                data
-            }) {
+            $.get(`/api/categories/${id}`, function({ data }) {
                 $('input[name="nama_kategori"]').val(data.nama_kategori);
             });
 
-            $('.form-kategori').submit(function(e) {
+            $('.form-kategori').off('submit').on('submit', function(e) {
                 e.preventDefault();
                 const token = localStorage.getItem('token');
                 const frmdata = new FormData(this);
 
                 $.ajax({
-                    url: `api/categories/${id}?_method=PUT`,
+                    url: `/api/categories/${id}?_method=PUT`,
                     type: 'POST',
                     data: frmdata,
                     cache: false,
@@ -179,14 +147,35 @@
                     success: function(data) {
                         if (data.success) {
                             alert('Data berhasil diubah');
-                            location.reload();
+                            location.reload(); // Reload halaman jika sukses
                         }
                     }
                 });
             });
         });
 
+        // Menangani klik tombol hapus
+        $(document).on('click', '.btn-hapus', function() {
+            const id = $(this).data('id');
+            const token = localStorage.getItem('token');
 
+            const confirm_dialog = confirm('Apakah anda yakin?');
+            if (confirm_dialog) {
+                $.ajax({
+                    url: '/api/categories/' + id,
+                    type: "DELETE",
+                    headers: {
+                        "Authorization": 'Bearer ' + token
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            alert('Data berhasil dihapus');
+                            loadData(); // Memuat kembali data kategori setelah penghapusan
+                        }
+                    }
+                });
+            }
+        });
     });
 </script>
 @endpush

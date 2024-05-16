@@ -6,11 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Member extends Authenticatable
+class Member extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+    protected $table = 'user';
+    protected $fillable = [
+        'nama', // Pastikan atribut ini ada
+        'email',
+        // ...
+    ];
     
     public function order()
     {

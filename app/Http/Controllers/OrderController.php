@@ -38,11 +38,6 @@ class OrderController extends Controller
         return view('pesanan.dikonfirmasi');
     }
 
-    public function dikemas_list()
-    {
-        return view('pesanan.dikemas');
-    }
-
     public function dikirim_list()
     {
         return view('pesanan.dikirim');
@@ -51,11 +46,6 @@ class OrderController extends Controller
     public function diterima_list()
     {
         return view('pesanan.diterima');
-    }
-
-    public function selesai_list()
-    {
-        return view('pesanan.selesai');
     }
 
     /**
@@ -77,7 +67,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_member' => 'required',
+            'id_user' => 'required',
         ]);
         if($validator->fails()) {
             return response()->json(
@@ -136,7 +126,7 @@ class OrderController extends Controller
     public function update(Request $request, transaksi_total $Order)
     {
         $validator = Validator::make($request->all(), [
-            'id_member' => 'required',
+            'id_user' => 'required',
             
         ]);
         if($validator->fails()) {
@@ -176,25 +166,11 @@ class OrderController extends Controller
         ]);
     }
 
-    public function baru()
-    {
-        $orders = transaksi_total::with('member')->where('status', 'Baru')->get();
-        return response()->json([
-            'data' => $orders
-        ]);
-    }
     public function dikonfirmasi()
     {
         $orders = transaksi_total::with('member')->where('status', 'konfirmasi')->get();
         return response()->json([
             'data' =>  $orders
-        ]);
-    }
-    public function dikemas()
-    {
-        $orders = transaksi_total::with('member')->where('status', 'Dikemas')->get();
-        return response()->json([
-            'data' => $orders
         ]);
     }
     public function dikirim()
@@ -207,13 +183,6 @@ class OrderController extends Controller
     public function diterima()
     {
         $orders = transaksi_total::with('member')->where('status', 'diterima')->get();
-        return response()->json([
-            'data' => $orders
-        ]);
-    }
-    public function selesai()
-    {
-        $orders = transaksi_total::with('member')->where('status', 'Selesai')->get();
         return response()->json([
             'data' => $orders
         ]);

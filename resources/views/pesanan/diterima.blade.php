@@ -17,8 +17,8 @@
                         <tr>
                             <th>No</th>
                             <th>Tanggal Pesanan</th>
-                            <th>Invoice</th>
-                            <th>Member</th>
+                            <th>Id_User</th>
+                            <th>Status</th>
                             <th>Total</th>
                             <th>Aksi</th>
                         </tr>
@@ -62,13 +62,13 @@
                     data.map(function(val, index) {
                         row += `
             <tr>
-               <td>${index + 1}</td>
+                <td>${index + 1}</td>
                <td>${date(val.created_at)}</td>
-               <td>${val.invoice}</td>
-               <td>${val.member.nama_member}</td>
-               <td>${rupiah(val.grand_total)}</td>
+               <td>${val.id_user}</td>
+               <td>${val.status}</td>
+               <td>${rupiah(val.total_harga)}</td>
                <td>
-                    <a href="#" data-id="${val.id}" class="btn btn-success btn-aksi">Selesai</a>
+                    <a href="#" data-id="${val.id_tt}" class="btn btn-success btn-aksi">Selesai</a>
                 </td>
             </tr>
             `;

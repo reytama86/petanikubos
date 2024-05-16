@@ -17,13 +17,10 @@
                                 Total Pesanan</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totaltransaksi_totals }}</div>
                             <br>
-                            <div class="h6 mb-0 font-weight-bold text-gray-800"> Baru: {{ $totalPesananBaru }}</div>
                             <div class="h6 mb-0 font-weight-bold text-gray-800"> Dikonfirmasi:
                                 {{ $totalPesananDikonfirmasi }}</div>
-                            <div class="h6 mb-0 font-weight-bold text-gray-800"> Dikemas: {{ $totalPesananDikemas }}</div>
                             <div class="h6 mb-0 font-weight-bold text-gray-800"> Dikirim: {{ $totalPesananDikirim }}</div>
                             <div class="h6 mb-0 font-weight-bold text-gray-800"> Diterima: {{ $totalPesananDiterima }}</div>
-                            <div class="h6 mb-0 font-weight-bold text-gray-800"> Selesai: {{ $totalPesananSelesai }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>

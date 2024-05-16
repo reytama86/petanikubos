@@ -13,20 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->integer('id_member');
-            $table->integer('invoice');
-            $table->integer('grand_total');
+        Schema::create('transaksi_total', function (Blueprint $table) {
+            $table->id('id_tt');
+            $table->integer('id_user');
+            $table->integer('total_harga');
             $table->string('status');
             $table->timestamps();
         });
-        Schema::create('orders_details', function (Blueprint $table) {
-            $table->id();
-            $table->integer('id_order');
+        Schema::create('transaksi_detail', function (Blueprint $table) {
+            $table->id('id_td');
+            $table->integer('id_tt');
             $table->integer('id_produk');
+            $table->string('nama_produk');
+            $table->integer('harga');
             $table->integer('jumlah');
-            $table->integer('total');
             $table->timestamps();
         });
     }

@@ -10,6 +10,11 @@ class Kategori extends Model
     use HasFactory;
     protected $guarded = [];
     protected $table = 'kategori';
+    protected $primaryKey = 'id_kategori'; // pastikan ini sesuai dengan primary key di tabel
+
+    protected $fillable = [
+        'nama_kategori',
+    ];
 
     public function Subcategory()
     {

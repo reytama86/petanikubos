@@ -84,7 +84,7 @@
                 url: '/api/pesanan/ubah_status/' +  id,
                 type: 'POST',
                 data : {
-                    status : "Dikonfirmasi"
+                    status : "konfirmasi"
                 },
                 headers: {
                     "Authorization": 'Bearer' + token

@@ -65,8 +65,7 @@
                         {{-- <a class="collapse-item" href="/subkategori">Data Subkategori</a> --}}
                         <a class="collapse-item" href="/slider">Data Slider</a>
                         <a class="collapse-item" href="/barang">Data Barang</a>
-                        <a class="collapse-item" href="/panen">Data Panen</a>
-                        <a class="collapse-item" href="/testimoni">Data Testimoni</a>
+                        <a class="collapse-item" href="/postings">Data Panen</a>
                     </div>
                 </div>
             </li>
@@ -79,12 +78,9 @@
                 <div id="pesanan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="/pesanan/baru">Pesanan Baru</a>
                         <a class="collapse-item" href="/pesanan/dikonfirmasi">Pesanan Dikonfirmasi</a>
-                        <a class="collapse-item" href="/pesanan/dikemas">Pesanan Dikemas</a>
                         <a class="collapse-item" href="/pesanan/dikirim">Pesanan Dikirim</a>
                         <a class="collapse-item" href="/pesanan/diterima">Pesanan Diterima</a>
-                        <a class="collapse-item" href="/pesanan/selesai">Pesanan Selesai</a>
                     </div>
                 </div>
             </li>
@@ -99,11 +95,11 @@
                     <i class="fas fa-fw fa-book"></i>
                     <span>Laporan Pesanan</span></a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" href="/tentang">
                     <i class="fas fa-fw fa-globe"></i>
                     <span>Tentang</span></a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link" href="/logout">
                     <i class="fas fa-fw fa-sign-out-alt"></i>

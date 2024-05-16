@@ -17,8 +17,8 @@
                         <tr>
                             <th>No</th>
                             <th>Tanggal Pesanan Dikonfirmasi</th>
-                            <th>Invoice</th>
-                            <th>Member</th>
+                            <th>Nama</th>
+                            <th>Status</th>
                             <th>Total</th>
                             <th>Aksi</th>
                         </tr>
@@ -64,11 +64,11 @@
             <tr>
                <td>${index + 1}</td>
                <td>${date(val.created_at)}</td>
-               <td>${val.id_user}</td>
+               <td>${val.id_user}</td> <!-- Perubahan di sini -->
                <td>${val.status}</td>
                <td>${rupiah(val.total_harga)}</td>
                <td>
-                    <a href="#" data-id="${val.id_tt}" class="btn btn-success btn-aksi">Kemas</a>
+                    <a href="#" data-id="${val.id_tt}" class="btn btn-success btn-aksi">Dikirim</a>
                 </td>
             </tr>
             `;
@@ -84,7 +84,7 @@
                 url: '/api/pesanan/ubah_status/' +  id,
                 type: 'POST',
                 data : {
-                    status : "Dikemas"
+                    status : "dikirim"
                 },
                 headers: {
                     "Authorization": 'Bearer' + token
